@@ -1,53 +1,97 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-    <head>
-        <title></title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <script src="tabelinha.js"></script>
-    </head>
-    <body>
-        <h3>test. </h3>
-        <div id="tabela-exemplo">
-        </div>
+  <head>
+    <title></title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script src="tabelinha.js"></script>
+  </head>
+  <body>
+    <h3>test.</h3>
+    <div id="tabela-exemplo"></div>
 
-        <h3>test. via json </h3>
-        <div id="tabela-exemplojson">
-        </div>
+    <h3>test. via json</h3>
+    <div id="tabela-exemplo2"></div>
 
+    <script>
+      (function () {
 
-        <h3>test. via json e por innerHTML </h3>
-        <div id="tabela-exemplo-div">
-        </div>
+        let test_json = {
+          cols: [
+            "codigo",
+            "data",
+            "email",
+            "matricula",
+            "nome",
+            "situacao",
+            "turma",
+          ],
+          rows: [
+            {
+              codigo: 1,
+              data: "2020-12-06T02:18:25.194413",
+              email: "Fulano 1",
+              matricula: "123455",
+              nome: "fulano1@email.com",
+              situacao: "ativo",
+              turma: "turma 1",
+            },
+            {
+              codigo: 2,
+              data: "2020-12-06T02:18:25.194413",
+              email: "cirano 1",
+              matricula: "123455",
+              nome: "cicrano@email.com",
+              situacao: "ativo",
+              turma: "turma 2",
+            },
+            {
+              codigo: 3,
+              data: "2020-12-06T02:18:25.194413",
+              email: "pedrao asiusahsaiuh",
+              matricula: "123455",
+              nome: "tomao@email.com",
+              situacao: "ativo",
+              turma: "turma 2",
+            },
+            {
+              codigo: 4,
+              data: "2020-12-06T02:18:25.194413",
+              email: "luiz felipe ",
+              matricula: "123455",
+              nome: "lulu@email.com",
+              situacao: "ativo",
+              turma: "turma 2",
+            },
+            {
+              codigo: 5,
+              data: "2020-12-06T02:18:25.194413",
+              email: "amanda amora",
+              matricula: "123455",
+              nome: "aa@email.com",
+              situacao: "ativo",
+              turma: "turma 2",
+            },
+          ],
+        };
 
-        <script>
-            (function(){
-                // inserido direto na div via .div
-                let tab = new Tabelinha();
-                tab.div = "tabela-exemplo";
-                tab.cols = ["idade", "nome"];
-                tab.rows = [[18, "joaozinho"], [19, "mariazinha"]];
-                tab.render();
+        // direto
+        let tab = new Tabelinha();
+        tab.div = "tabela-exemplo";
+        tab.cols = ["idade", "nome"];
+        tab.rows = [
+          [18, "joaozinho"],
+          [19, "mariazinha"],
+        ];
+        tab.render();
 
-                // inserido direto na div via .div e json objeto
-                let tabjson = new Tabelinha();
-                tabjson.div = "tabela-exemplojson";
-                tabjson.load({
-                    cols: ["idade", "nome"],
-                    rows: [[18, "joaozinho"], [19, "mariazinha"]],
-                });
-                tabjson.render();
-
-                // inserido direto na div via .div e json objeto com innerHTML
-                let tabjson2 = new Tabelinha();
-                let div = document.getElementById("tabela-exemplo-div");
-                tabjson2.load({
-                    cols: ["idade", "nome"],
-                    rows: [[18, "joaozinho"], [19, "mariazinha"]],
-                });
-                div.innerHTML = tabjson2.render();
-
-            })();
-        </script>
-    </body>
+        // json
+        let tab2 = new Tabelinha();
+        tab2.id = "tabelinha2";
+        tab2.div = "tabela-exemplo2";
+        tab2.load(test_json);
+        tab2.render();
+      })();
+    </script>
+  </body>
 </html>

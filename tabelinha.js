@@ -1,5 +1,8 @@
 /**
  * Jhonathan P. Banczek.
+ * 
+ * github.com/jhoonb/tabelinha.js
+ * 
  * ------------------------------------------------------------- 
  * Tabelinha, objeto para gerar uma tabela HTML 
  * let tab = new Tabelinha();
@@ -7,6 +10,7 @@
  * tab.rows = [["joãozinho", 20], ["mariazinha", "21"]];
  * 
  * el.innerHTML = tab.render(); // retorna o HTML ou
+ * 
  * // id de algum div existente no HTML
  * tab.div = "div-tabela";
  * tab.render();
@@ -27,13 +31,24 @@ function Tabelinha() {
     this.class_tr = '';
 
     this.cols = [];
+    // máscara do titulo das colunas
+    this.cols_mask = {};
+
     this.rows = [];
     this.ihtml = ""; // para usar em el.innerHTML
 
     this.render = function () {
+
+        //máscara para exibir no thead da tabela
+        if(Object.keys(this.cols_mask).length == 0) {
+            for(let i in this.cols) {
+                this.cols_mask[this.cols[i]] = this.cols[i];
+            }
+        }
+
         let colsRaw = "";
         for (let c in this.cols) {
-            colsRaw += `<th> ${this.cols[c]} </th>\n`;
+            colsRaw += `<th> ${this.cols_mask[this.cols[c]]} </th>\n`;
         }
 
         let rowsRaw = '';
@@ -63,10 +78,19 @@ function Tabelinha() {
         }
         return this.ihtml;
     }
+
     // load carrega os dados via um objeto json
-    // [TODO] acrescentar os outros atributos
-    this.load = function (jsonObject) {
-        this.cols = jsonObject["cols"];
-        this.rows = jsonObject["rows"];
+    this.load = function (data) {
+
+        this.rows = []; // novo
+        this.cols = data["cols"];
+
+        for(let i in data.rows) {
+            var row = [];
+            for(let c in this.cols) {
+                row.push(data.rows[i][this.cols[c]]);
+            }
+            this.rows.push(row);
+        }
     }
 }
